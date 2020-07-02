@@ -111,7 +111,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // Iterable list = udata[0]['message'];
       // data = udata['message'];
       // print(udata.length());
-      // udata.length();
       setState(() {
         ss = udata;
         _adata = [];
