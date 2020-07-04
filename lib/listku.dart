@@ -7,6 +7,7 @@ class Listcard extends StatefulWidget {
 }
 
 class _ListcardState extends State<Listcard> {
+  bool swiit = false;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -25,10 +26,18 @@ class _ListcardState extends State<Listcard> {
                 Container(
                     padding: EdgeInsets.all(8.0),
                     width: double.maxFinite,
-                    child: Text(
-                      "DHT22 Ke-${index.toString()}",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    child: Stack(
+                      children: <Widget>[
+                        Icon(Icons.graphic_eq),
+                        Align(
+                          alignment: Alignment(-0.35, -0.75),
+                          child: Text(
+                            "DHT22 Ke-${index.toString()}",
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     )),
                 Divider(
                   color: Colors.grey,
@@ -36,19 +45,24 @@ class _ListcardState extends State<Listcard> {
                 Expanded(
                   child: Container(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        verticalDirection: VerticalDirection.up,
+                      child: Stack(
                         children: <Widget>[
-                          Text(
-                            "${widget.dataku[0]['S' + index.toString()].toString()}°C",
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          Align(
+                            alignment: Alignment(-0.80, 0.00),
+                            child: Text(
+                              "${widget.dataku[0]['S' + index.toString()].toString()}°C",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 70.0),
+                          Align(
+                            alignment: Alignment(0.85, 0.00),
                             child: Text(
                               "Suhu",
                               textAlign: TextAlign.start,
+                              style: TextStyle(fontSize: 17.0),
                             ),
                           )
                         ],
@@ -60,40 +74,53 @@ class _ListcardState extends State<Listcard> {
                 Expanded(
                   child: Container(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                          verticalDirection: VerticalDirection.up,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  "Lembab",
-                                  textAlign: TextAlign.start,
-                                ),
-                              ],
+                      child: Stack(children: <Widget>[
+                        Align(
+                          alignment: Alignment(-0.80, 0.00),
+                          child: Text(
+                            "Lembab",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(fontSize: 17.0),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment(0.85, 0.00),
+                          child: Text(
+                            "${widget.dataku[0]['L' + index.toString()].toString()}%",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 60.0),
-                                  child: Text(
-                                    "${widget.dataku[0]['L' + index.toString()].toString()}%",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ])),
+                          ),
+                        ),
+                      ])),
                 ),
                 Divider(
                   color: Colors.grey,
                 ),
                 Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      "Mode : ${widget.dataku[0]['m' + index.toString()].toString()}"),
+                  child: Stack(children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.dataku[0]['m' + index.toString()] == true
+                            ? "Manual"
+                            : "Otomatis",
+                        style: TextStyle(fontSize: 17.00),
+                      ),
+                    ),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: Switch(
+                            value: widget.dataku[0]['m' + index.toString()],
+                            onChanged: (value) {
+                              setState(() {
+                                widget.dataku[0]['m' + index.toString()] =
+                                    value;
+                              });
+                            }))
+                  ]),
                 )
                 // RaisedButton(
                 //   onPressed: () => _prinn(widget.dataku[index]),

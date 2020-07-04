@@ -53,10 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
       "SEL2": 'on',
       "SEL3": 'on',
       "SEL4": 'off',
-      'm0': "auto",
-      'm1': "auto",
-      'm2': "auto",
-      'm3': "auto",
+      'm0': true,
+      'm1': false,
+      'm2': true,
+      'm3': true,
       'tank': 90
     });
   }
@@ -127,10 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
           "sel1": "on",
           "sel2": "on",
           "sel3": "off",
-          "m0": "auto",
-          "m1": "auto",
-          "m2": "auto",
-          "m3": "auto",
+          "m0": udata['m0'],
+          "m1": udata['m1'],
+          "m2": udata['m2'],
+          "m3": udata['m3'],
           "tank": 90
         });
         if (udata['S5'] == null) {
