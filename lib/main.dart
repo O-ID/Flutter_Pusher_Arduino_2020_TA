@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:pusherflu/control.dart';
 
+import 'cardair.dart';
 import 'listku.dart';
 
 void main() {
@@ -53,14 +54,25 @@ class _MyHomePageState extends State<MyHomePage> {
       "SEL2": 'on',
       "SEL3": 'on',
       "SEL4": 'off',
-      'm0': true,
-      'm1': false,
-      'm2': true,
-      'm3': true,
-      'tank': 90
+      "m0": true,
+      "m1": false,
+      "m2": true,
+      "m3": true,
+      "tank": 90
     });
   }
 
+  int tabin = 0;
+  void _tabke(int i) {
+    setState(() {
+      tabin = i;
+    });
+  }
+
+  final tombol = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
+    BottomNavigationBarItem(icon: Icon(Icons.headset), title: Text("Home")),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,14 +84,28 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.hasError) {
             print(snapshot.error);
           }
-          return new Listcard(_adata);
+          return Column(
+            children: <Widget>[
+              Expanded(child: new Listcard(_adata)),
+            ],
+            //     child: Stack(
+            //   children: <Widget>[new Listcard(_adata), new Cardair(_adata)],
+            // )
+          );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => mmain(),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        items: tombol,
+        currentIndex: tabin,
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
+        onTap: _tabke,
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => mmain(),
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 

@@ -20,31 +20,37 @@ class _ListcardState extends State<Listcard> {
         itemCount: widget.dataku[0]['S5'] == null ? 4 : 6,
         itemBuilder: (context, index) {
           return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            elevation: 5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                    padding: EdgeInsets.all(8.0),
-                    width: double.maxFinite,
-                    child: Stack(
-                      children: <Widget>[
-                        Icon(Icons.graphic_eq),
-                        Align(
-                          alignment: Alignment(-0.35, -0.75),
-                          child: Text(
-                            "DHT22 Ke-${index.toString()}",
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                          ),
+                  padding: EdgeInsets.only(
+                      top: 12.0, bottom: 0.0, right: 8.0, left: 8.0),
+                  width: double.maxFinite,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.graphic_eq),
+                      Align(
+                        alignment: Alignment(-0.35, -0.75),
+                        child: Text(
+                          "DHT22 Ke-${index.toString()}",
+                          style: TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
                 Divider(
                   color: Colors.grey,
                 ),
                 Expanded(
                   child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Stack(
                         children: <Widget>[
                           Align(
@@ -73,7 +79,7 @@ class _ListcardState extends State<Listcard> {
                 ),
                 Expanded(
                   child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Stack(children: <Widget>[
                         Align(
                           alignment: Alignment(-0.80, 0.00),
@@ -99,34 +105,37 @@ class _ListcardState extends State<Listcard> {
                   color: Colors.grey,
                 ),
                 Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.dataku[0]['m' + index.toString()] == true
-                            ? "Manual"
-                            : "Otomatis",
-                        style: TextStyle(fontSize: 17.00),
+                  padding: const EdgeInsets.only(bottom: 0.0, top: 0.0),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12.0, left: 12.0),
+                          child: Text(
+                            widget.dataku[0]['m' + index.toString()] == true
+                                ? "Manual"
+                                : "Otomatis",
+                            style: TextStyle(fontSize: 17.00),
+                          ),
+                        ),
                       ),
-                    ),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: Switch(
-                            value: widget.dataku[0]['m' + index.toString()],
-                            onChanged: (value) {
-                              setState(() {
-                                widget.dataku[0]['m' + index.toString()] =
-                                    value;
-                              });
-                            }))
-                  ]),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Switch(
+                                value: widget.dataku[0]['m' + index.toString()],
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.dataku[0]['m' + index.toString()] =
+                                        value;
+                                  });
+                                }),
+                          ))
+                    ],
+                  ),
                 )
-                // RaisedButton(
-                //   onPressed: () => _prinn(widget.dataku[index]),
-                //   child: Text(index.toString()),
-                // )
-                // FloatingActionButton(onPressed: () => _prinn(widget.dataku[i])),
               ],
             ),
           );
