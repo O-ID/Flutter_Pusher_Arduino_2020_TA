@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Cardair extends StatefulWidget {
+  Cardair(List adata);
+
   // final List<dynamic> dataku;
   // Cardair(this.dataku, {Key key});
   _CardairState createState() => _CardairState();

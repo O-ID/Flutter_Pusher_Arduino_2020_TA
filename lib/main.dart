@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
-import 'package:pusherflu/control.dart';
-
 import 'cardair.dart';
+import 'listku.dart';
+import 'listku.dart';
 import 'listku.dart';
 
 void main() {
@@ -84,13 +84,15 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.hasError) {
             print(snapshot.error);
           }
-          return Column(
-            children: <Widget>[
-              Expanded(child: new Listcard(_adata)),
-            ],
-            //     child: Stack(
-            //   children: <Widget>[new Listcard(_adata), new Cardair(_adata)],
-            // )
+          return Container(
+            constraints: BoxConstraints.expand(),
+            child: Column(
+              children: <Widget>[
+                // Flexible(child: Listcard(_adata), fit: FlexFit.tight),
+                Listcard(_adata),
+                Cardair(_adata)
+              ],
+            ),
           );
         },
       ),

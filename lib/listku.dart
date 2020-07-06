@@ -18,6 +18,7 @@ class _ListcardState extends State<Listcard> {
                     : 3),
         //isi panjang card itemcount
         itemCount: widget.dataku[0]['S5'] == null ? 4 : 6,
+        shrinkWrap: true,
         itemBuilder: (context, index) {
           return Card(
             shape: RoundedRectangleBorder(
