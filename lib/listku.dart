@@ -11,22 +11,24 @@ class _ListcardState extends State<Listcard> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:
-                MediaQuery.of(context).orientation == Orientation.portrait
-                    ? 2
-                    : 3),
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        // MediaQuery.of(context).orientation == Orientation.portrait
+        //     ? 2
+        //     : 3),
         //isi panjang card itemcount
-        itemCount: widget.dataku[0]['S5'] == null ? 4 : 6,
+        itemCount: widget.dataku[0]['S5'] == null ? 6 : 6,
+        // scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemBuilder: (context, index) {
+          int ind = index + 1;
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
             ),
             elevation: 5,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(
@@ -38,7 +40,7 @@ class _ListcardState extends State<Listcard> {
                       Align(
                         alignment: Alignment(-0.35, -0.75),
                         child: Text(
-                          "DHT22 Ke-${index.toString()}",
+                          "DHT22 Ke-${ind.toString()}",
                           style: TextStyle(
                               fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
