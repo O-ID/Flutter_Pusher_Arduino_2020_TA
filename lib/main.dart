@@ -109,7 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-//baru ditambah
   Future<void> _konekpusher() async {
     //init pusher dulu cek di app key pusher
     try {
