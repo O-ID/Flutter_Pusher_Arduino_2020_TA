@@ -10,7 +10,7 @@ class Listcardody extends StatefulWidget {
 }
 
 class _ListcardodyState extends State<Listcardody> {
-  final Map<dynamic, dynamic> tbl = {};
+  final Map<String, dynamic> tbl = {};
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -133,10 +133,10 @@ class _ListcardodyState extends State<Listcardody> {
                                       widget.mdata[0]['m' + index.toString()] =
                                           value;
                                       for (var i = 0; i < 6; i++) {
-                                        tbl['"m$i"'] =
-                                            widget.mdata[0]['m$i'].toString();
+                                        tbl['m$i'] = widget.mdata[0]['m$i'];
+                                        // widget.mdata.
                                       }
-                                      // print(tbl);
+                                      // print(widget.mdata);
                                       mmain(tbl);
                                     });
                                   }),

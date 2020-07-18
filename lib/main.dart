@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
-// import 'package:pusherflu/cardair.dart';
+// import 'package:pusherflu/control.dart';
 import 'package:pusherflu/chart.dart';
 import 'package:pusherflu/listcardody.dart';
 
@@ -173,13 +173,14 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _madata = [];
         _madata.add({
-          "m0": mudata['m0'],
-          "m1": mudata['m1'],
-          "m2": mudata['m2'],
-          "m3": mudata['m3'],
-          "m4": false,
-          "m5": false
+          "m0": mudata["m0"],
+          "m1": mudata["m1"],
+          "m2": mudata["m2"],
+          "m3": mudata["m3"],
+          "m4": mudata["m4"],
+          "m5": mudata["m5"]
         });
+        // createAlbum(val);
       });
     });
   }
