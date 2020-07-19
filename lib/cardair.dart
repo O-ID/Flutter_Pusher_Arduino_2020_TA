@@ -43,11 +43,11 @@ class _CardairState extends State<Cardair> {
                 Container(
                   padding: EdgeInsets.all(0.0),
                   width: double.maxFinite,
-                  height: 150.0,
+                  height: 160.0,
                   child: Stack(
                     children: <Widget>[
                       Align(
-                        alignment: Alignment(-0.79, -0.34),
+                        alignment: Alignment(-0.79, -0.64),
                         child: Text(
                           widget.dataku[0]['tank'].toString(),
                           style: TextStyle(
@@ -62,7 +62,7 @@ class _CardairState extends State<Cardair> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(-0.29, 0.15),
+                        alignment: Alignment(-0.29, 0.02),
                         child: Text(
                           "%",
                           style: TextStyle(
@@ -87,7 +87,23 @@ class _CardairState extends State<Cardair> {
                               borderRadius: BorderRadius.circular(18.0),
                               border: Border.all()),
                         ),
-                      )
+                      ),
+                      Align(
+                        alignment: Alignment(-0.97, 0.76),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12.0, left: 12.0),
+                          child: Text(
+                            "Manual",
+                            style: TextStyle(fontSize: 17.00),
+                          ),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment(-0.20, 0.98),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Switch(value: true, onChanged: (value) {}),
+                          ))
                     ],
                   ),
                 ),

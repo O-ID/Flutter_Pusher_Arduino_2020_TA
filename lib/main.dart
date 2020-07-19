@@ -15,13 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: ''),
     );
   }
 }
@@ -95,8 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 500, height: 400, child: StackedBarChart.withSampleData()))
     ];
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          title: Text(widget.title),
+          backgroundColor: Color(0xff9575cd),
+        ),
       ),
       body: Container(child: page[tabin]),
       bottomNavigationBar: BottomNavigationBar(

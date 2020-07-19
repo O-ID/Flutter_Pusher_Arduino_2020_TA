@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class StackedBarChart extends StatelessWidget {
+class StackedBarChart extends StatefulWidget {
   final List<charts.Series> seriesList;
   final bool animate;
 
@@ -16,29 +16,17 @@ class StackedBarChart extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.stacked,
-    );
-  }
+  _StackedBarChartState createState() => _StackedBarChartState();
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
-      new OrdinalSales('Janurari', 5),
-      new OrdinalSales('Februari', 25),
-      new OrdinalSales('Maret', 20),
-      new OrdinalSales('April', 75),
-      new OrdinalSales('Mei', 45),
-      new OrdinalSales('Juni', 35),
-      new OrdinalSales('Juli', 67),
-      new OrdinalSales('Agustus', 98),
-      new OrdinalSales('September', 86),
-      new OrdinalSales('Oktober', 55),
-      new OrdinalSales('November', 25),
-      new OrdinalSales('Desember', 100),
+      new OrdinalSales('DHT 1', 5),
+      new OrdinalSales('DHT 3', 25),
+      new OrdinalSales('DHT 4', 20),
+      new OrdinalSales('DHT 5', 75),
+      new OrdinalSales('DHT 6', 45),
+      new OrdinalSales('Air', 67),
     ];
 
     // final tableSalesData = [
@@ -75,6 +63,17 @@ class StackedBarChart extends StatelessWidget {
       //   data: mobileSalesData,
       // ),
     ];
+  }
+}
+
+class _StackedBarChartState extends State<StackedBarChart> {
+  @override
+  Widget build(BuildContext context) {
+    return new charts.BarChart(
+      widget.seriesList,
+      animate: widget.animate,
+      barGroupingType: charts.BarGroupingType.stacked,
+    );
   }
 }
 
