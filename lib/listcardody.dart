@@ -132,8 +132,12 @@ class _ListcardodyState extends State<Listcardody> {
                                     setState(() {
                                       widget.mdata[0]['m' + index.toString()] =
                                           value;
-                                      for (var i = 0; i < 6; i++) {
-                                        tbl['m$i'] = widget.mdata[0]['m$i'];
+                                      for (var i = 0; i < 7; i++) {
+                                        if (i != 6) {
+                                          tbl['m$i'] = widget.mdata[0]['m$i'];
+                                        } else {
+                                          tbl['tkk'] = widget.mdata[0]['tkk'];
+                                        }
                                         // widget.mdata.
                                       }
                                       // print(widget.mdata);
@@ -149,7 +153,9 @@ class _ListcardodyState extends State<Listcardody> {
             );
           }),
         ),
-        SliverList(delegate: SliverChildListDelegate([Cardair(widget.dataku)]))
+        SliverList(
+            delegate:
+                SliverChildListDelegate([Cardair(widget.dataku, widget.mdata)]))
       ],
     );
   }

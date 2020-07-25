@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pusherflu/control.dart';
 
 class Cardair extends StatefulWidget {
   // Cardair(List adata);
 
   final List<dynamic> dataku;
-  Cardair(this.dataku, {Key key});
+  final List<dynamic> mdata;
+  Cardair(this.dataku, this.mdata, {Key key});
   _CardairState createState() => _CardairState();
 }
 
 class _CardairState extends State<Cardair> {
+  final Map<String, dynamic> tbl = {};
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,7 +54,7 @@ class _CardairState extends State<Cardair> {
                         child: Text(
                           widget.dataku[0]['tank'].toString(),
                           style: TextStyle(
-                              fontSize: 88.0,
+                              fontSize: 78.0,
                               fontWeight: FontWeight.bold,
                               shadows: <Shadow>[
                                 Shadow(
@@ -102,7 +105,23 @@ class _CardairState extends State<Cardair> {
                           alignment: Alignment(-0.20, 0.98),
                           child: Padding(
                             padding: const EdgeInsets.only(right: 12.0),
-                            child: Switch(value: true, onChanged: (value) {}),
+                            child: Switch(
+                                value: widget.mdata[0]['tkk'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.mdata[0]['tkk'] = value;
+                                    for (var i = 0; i < 7; i++) {
+                                      if (i != 6) {
+                                        tbl['m$i'] = widget.mdata[0]['m$i'];
+                                      } else {
+                                        tbl['tkk'] = widget.mdata[0]['tkk'];
+                                      }
+                                      // widget.mdata.
+                                    }
+                                    // print(widget.mdata);
+                                    mmain(tbl);
+                                  });
+                                }),
                           ))
                     ],
                   ),

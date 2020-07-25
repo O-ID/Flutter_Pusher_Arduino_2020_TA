@@ -55,10 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "L3": 90.77,
       "L4": 90.77,
       "L5": 90.77,
-      "SEL1": 'on',
-      "SEL2": 'on',
-      "SEL3": 'on',
-      "SEL4": 'off',
       "tank": 90
     });
     _madata.add({
@@ -68,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       "m3": false,
       "m4": false,
       "m5": false,
+      "tkk": false,
     });
   }
 
@@ -156,10 +153,6 @@ class _MyHomePageState extends State<MyHomePage> {
           "L3": udata['L3'],
           "L4": 0,
           "L5": 0,
-          "sel0": "on",
-          "sel1": "on",
-          "sel2": "on",
-          "sel3": "off",
           "tank": udata['tank']
         });
         if (udata['S5'] == null) {
@@ -181,7 +174,8 @@ class _MyHomePageState extends State<MyHomePage> {
           "m2": mudata["m2"],
           "m3": mudata["m3"],
           "m4": mudata["m4"],
-          "m5": mudata["m5"]
+          "m5": mudata["m5"],
+          "tkk": mudata["tkk"]
         });
         // createAlbum(val);
       });
