@@ -91,18 +91,20 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 500, height: 400, child: StackedBarChart.withSampleData()))
     ];
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: AppBar(
-          title: Text(widget.title),
-          backgroundColor: Color(0xff9575cd),
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(70.0),
+      //   child: AppBar(
+      //     title: Text(widget.title),
+      //     backgroundColor: Colors.purple[100], //Color(0xff9575cd),
+      //     elevation: 0.0, //shadow app bar
+      //   ),
+      // ),
+      backgroundColor: Colors.purple[100],
       body: Container(child: page[tabin]),
       bottomNavigationBar: BottomNavigationBar(
         items: tombol,
         currentIndex: tabin,
-        selectedItemColor: Colors.blueAccent,
+        selectedItemColor: Colors.purple,
         unselectedItemColor: Colors.grey,
         onTap: _tabke,
       ),
