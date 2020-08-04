@@ -15,15 +15,15 @@ class _ListcardodyState extends State<Listcardody> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
-        SliverAppBar(
-          title: Text("appbar sliver"),
-          floating: false,
-          expandedHeight: 80.0,
-          // titleSpacing: 50.0,
+        // SliverAppBar(
+        //   title: Text("appbar sliver"),
+        //   floating: false,
+        //   expandedHeight: 80.0,
+        //   // titleSpacing: 50.0,
 
-          backgroundColor: Colors.purple[100],
-          elevation: 0.0,
-        ),
+        //   backgroundColor: Colors.purple[100],
+        //   elevation: 0.0,
+        // ),
         SliverGrid.count(
           crossAxisCount: 2,
           children: List.generate(6, (index) {

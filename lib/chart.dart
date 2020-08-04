@@ -28,21 +28,6 @@ class StackedBarChart extends StatefulWidget {
       new OrdinalSales('DHT 6', 45),
       new OrdinalSales('Air', 67),
     ];
-
-    // final tableSalesData = [
-    //   new OrdinalSales('Januari', 25),
-    //   new OrdinalSales('Februari', 50),
-    //   new OrdinalSales('Maret', 10),
-    //   new OrdinalSales('April', 20),
-    // ];
-
-    // final mobileSalesData = [
-    //   new OrdinalSales('Januari', 10),
-    //   new OrdinalSales('Februari', 15),
-    //   new OrdinalSales('Maret', 50),
-    //   new OrdinalSales('April', 45),
-    // ];
-
     return [
       new charts.Series<OrdinalSales, String>(
         id: 'Desktop',
@@ -50,18 +35,6 @@ class StackedBarChart extends StatefulWidget {
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      // new charts.Series<OrdinalSales, String>(
-      //   id: 'Tablet',
-      //   domainFn: (OrdinalSales sales, _) => sales.year,
-      //   measureFn: (OrdinalSales sales, _) => sales.sales,
-      //   data: tableSalesData,
-      // ),
-      // new charts.Series<OrdinalSales, String>(
-      //   id: 'Mobile',
-      //   domainFn: (OrdinalSales sales, _) => sales.year,
-      //   measureFn: (OrdinalSales sales, _) => sales.sales,
-      //   data: mobileSalesData,
-      // ),
     ];
   }
 }

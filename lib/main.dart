@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
-// import 'package:pusherflu/control.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:pusherflu/chart.dart';
 import 'package:pusherflu/listcardody.dart';
 
@@ -35,27 +35,65 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Channel _pChannel;
+  String _valGender = "Januari";
   List _adata = [];
   List _madata = [];
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  List _listGender = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember"
+  ];
   var ss;
   @override
   void initState() {
     super.initState();
     _konekpusher();
+    dLoad();
+  }
+
+  int tabin = 0;
+  void _tabke(int i) {
+    setState(() {
+      tabin = i;
+    });
+  }
+
+  void _onRefresh() async {
+    // monitor network fetch
+    setState(() {
+      dLoad();
+    });
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void dLoad() {
     _adata.add({
-      "S0": 39.00,
-      "S1": 67.90,
-      "S2": 98.90,
-      "S3": 45.80,
-      "S4": 45.80,
-      "S5": 45.80,
-      "L0": 45.80,
-      "L1": 54.90,
-      "L2": 34.78,
-      "L3": 90.77,
-      "L4": 90.77,
-      "L5": 90.77,
-      "tank": 90
+      "S0": 0,
+      "S1": 0,
+      "S2": 0,
+      "S3": 0,
+      "S4": 0,
+      "S5": 0,
+      "L0": 0,
+      "L1": 0,
+      "L2": 0,
+      "L3": 0,
+      "L4": 0,
+      "L5": 0,
+      "tank": 0
     });
     _madata.add({
       "m0": false,
@@ -65,13 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "m4": false,
       "m5": false,
       "tkk": false,
-    });
-  }
-
-  int tabin = 0;
-  void _tabke(int i) {
-    setState(() {
-      tabin = i;
     });
   }
 
@@ -85,22 +116,58 @@ class _MyHomePageState extends State<MyHomePage> {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     final page = <Widget>[
       Listcardody(_adata, _madata),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-              width: 500, height: 400, child: StackedBarChart.withSampleData()))
+      CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Align(
+                alignment: Alignment.topRight,
+                child: DropdownButton(
+                  hint: Text("Pilih Bulan"),
+                  value: _valGender,
+                  items: _listGender.map((e) {
+                    return DropdownMenuItem(
+                      child: Text(e),
+                      value: e,
+                    );
+                  }).toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      _valGender = val;
+                    });
+                  },
+                )),
+            Container(
+              height: 200,
+            ),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                    width: 500,
+                    height: 400,
+                    child: StackedBarChart.withSampleData()))
+          ]))
+        ],
+      ),
     ];
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(70.0),
-      //   child: AppBar(
-      //     title: Text(widget.title),
-      //     backgroundColor: Colors.purple[100], //Color(0xff9575cd),
-      //     elevation: 0.0, //shadow app bar
-      //   ),
-      // ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          title: Text('O-ID Smart'),
+          backgroundColor: Colors.purple[100], //Color(0xff9575cd),
+          elevation: 0.0, //shadow app bar
+        ),
+      ),
       backgroundColor: Colors.purple[100],
-      body: Container(child: page[tabin]),
+      body: SmartRefresher(
+          enablePullDown: true,
+          header: WaterDropMaterialHeader(
+            distance: 50.0,
+          ),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: page[tabin]),
       bottomNavigationBar: BottomNavigationBar(
         items: tombol,
         currentIndex: tabin,
@@ -147,14 +214,14 @@ class _MyHomePageState extends State<MyHomePage> {
           "S1": udata['S1'],
           "S2": udata['S2'],
           "S3": udata['S3'],
-          "S4": 0,
-          "S5": 0,
+          "S4": udata['S4'],
+          "S5": udata['S5'],
           "L0": udata['L0'],
           "L1": udata['L1'],
           "L2": udata['L2'],
           "L3": udata['L3'],
-          "L4": 0,
-          "L5": 0,
+          "L4": udata['L4'],
+          "L5": udata['L5'],
           "tank": udata['tank']
         });
         if (udata['S5'] == null) {
