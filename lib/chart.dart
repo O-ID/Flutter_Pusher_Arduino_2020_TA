@@ -30,11 +30,12 @@ class StackedBarChart extends StatefulWidget {
     ];
     return [
       new charts.Series<OrdinalSales, String>(
-        id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: desktopSalesData,
-      ),
+          id: 'Desktop',
+          domainFn: (OrdinalSales sales, _) => sales.year,
+          measureFn: (OrdinalSales sales, _) => sales.sales,
+          data: desktopSalesData,
+          labelAccessorFn: (OrdinalSales row, _) => row.sales.toString(),
+          colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault),
     ];
   }
 }

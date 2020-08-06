@@ -121,21 +121,32 @@ class _MyHomePageState extends State<MyHomePage> {
           SliverList(
               delegate: SliverChildListDelegate([
             Align(
-                alignment: Alignment.topRight,
-                child: DropdownButton(
-                  hint: Text("Pilih Bulan"),
-                  value: _valGender,
-                  items: _listGender.map((e) {
-                    return DropdownMenuItem(
-                      child: Text(e),
-                      value: e,
-                    );
-                  }).toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _valGender = val;
-                    });
-                  },
+                alignment: Alignment(0.80, 0.00),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                        color: Colors.white,
+                        style: BorderStyle.solid,
+                        width: 0.60),
+                  ),
+                  child: DropdownButton(
+                    hint: Text("Pilih Bulan"),
+                    dropdownColor: Colors.purple[200],
+                    value: _valGender,
+                    items: _listGender.map((e) {
+                      return DropdownMenuItem(
+                        child: Text(e),
+                        value: e,
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _valGender = val;
+                      });
+                    },
+                  ),
                 )),
             Container(
               height: 200,
@@ -151,13 +162,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ];
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: AppBar(
-          title: Text('O-ID Smart'),
-          backgroundColor: Colors.purple[100], //Color(0xff9575cd),
-          elevation: 0.0, //shadow app bar
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/images/icon.png',
+          height: 58.0,
+          width: 58.0,
+          alignment: Alignment.center,
         ),
+        backgroundColor: Colors.purple[100], //Color(0xff9575cd),
+        elevation: 0.0, //shadow app bar
       ),
       backgroundColor: Colors.purple[100],
       body: SmartRefresher(

@@ -135,6 +135,7 @@ class _ListcardodyState extends State<Listcardody> {
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: Switch(
+                                  activeColor: Colors.purple,
                                   value: widget.mdata[0]
                                       ['m' + index.toString()],
                                   onChanged: (value) {
