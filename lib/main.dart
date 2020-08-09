@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:pusherflu/chart.dart';
+import 'package:pusherflu/claschart.dart';
 import 'package:pusherflu/listcardody.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -38,6 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
   String _valGender = "Januari";
   List _adata = [];
   List _madata = [];
+  bool stindi = true;
+  List<ClassChart> data = [
+    ClassChart(sensor: 'DHT 1', datas: 19),
+    ClassChart(sensor: 'DHT 2', datas: 29),
+    ClassChart(sensor: 'DHT 3', datas: 39),
+    ClassChart(sensor: 'DHT 4', datas: 49),
+    ClassChart(sensor: 'DHT 5', datas: 59),
+    ClassChart(sensor: 'DHT 6', datas: 69),
+    ClassChart(sensor: 'AIR', datas: 79),
+  ];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   List _listGender = [
@@ -144,6 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     onChanged: (val) {
                       setState(() {
                         _valGender = val;
+                        _loadFrekap(_valGender);
+                        stindi = true;
                       });
                     },
                   ),
@@ -156,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                     width: 500,
                     height: 400,
-                    child: StackedBarChart.withSampleData()))
+                    child: StackedBarChart(dataf: data)))
           ]))
         ],
       ),
@@ -173,14 +187,19 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0.0, //shadow app bar
       ),
       backgroundColor: Colors.purple[100],
-      body: SmartRefresher(
-          enablePullDown: true,
-          header: WaterDropMaterialHeader(
-            distance: 50.0,
-          ),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          child: page[tabin]),
+      body: stindi
+          ? Align(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            )
+          : SmartRefresher(
+              enablePullDown: true,
+              header: WaterDropMaterialHeader(
+                distance: 50.0,
+              ),
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: page[tabin]),
       bottomNavigationBar: BottomNavigationBar(
         items: tombol,
         currentIndex: tabin,
@@ -237,6 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
           "L5": udata['L5'],
           "tank": udata['tank']
         });
+        stindi = false;
         if (udata['S5'] == null) {
           //kondisi ini dipakai untuk dinamis, ketika admin menambah kan sensor dht22 lagi
           print('s5 kosong');
@@ -262,5 +282,45 @@ class _MyHomePageState extends State<MyHomePage> {
         // createAlbum(val);
       });
     });
+  }
+
+  Future<void> _loadFrekap(String isian) async {
+    final respon = await http.post('https://odi.sdnlada2.sch.id/f_rekap.php',
+        body: {'dcode': isian});
+    // await http.get('https://odi.sdnlada2.sch.id/f_rekap.php');
+    if (respon.statusCode == 200) {
+      // final o = json.decode(respon.body);
+      // print(json.decode(respon.body)[1]);
+      final a = json.decode(respon.body);
+      setState(() {
+        // int dex = 0;
+        data.clear();
+        for (Map i in a) {
+          // dex++;
+          data.add(ClassChart(
+              sensor: Album.fromJson(i).sensor, datas: Album.fromJson(i).onn));
+          // print(Album.fromJson(i).onn);
+          // print(dex);
+        }
+        stindi = false;
+        // loading = false;
+      });
+    }
+  }
+}
+
+class Album {
+  final int id;
+  final String sensor;
+  final int onn;
+
+  Album({this.id, this.sensor, this.onn});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      id: int.parse(json['id']),
+      sensor: json['sensor'],
+      onn: int.parse(json['onn']),
+    );
   }
 }

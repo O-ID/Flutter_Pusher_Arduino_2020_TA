@@ -96,7 +96,7 @@ class _CardairState extends State<Cardair> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 12.0, left: 12.0),
                           child: Text(
-                            "Manual",
+                            widget.mdata[0]['tkk'] ? "Manual" : "Otomatis",
                             style: TextStyle(fontSize: 17.00),
                           ),
                         ),
