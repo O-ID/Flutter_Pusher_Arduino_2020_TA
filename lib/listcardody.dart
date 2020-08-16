@@ -15,10 +15,35 @@ class _ListcardodyState extends State<Listcardody> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
+        // SliverPersistentHeader(delegate: ),
+        SliverAppBar(
+          expandedHeight: 150,
+          stretch: false,
+          backgroundColor: Colors.purple[50],
+          flexibleSpace: FlexibleSpaceBar(
+            background:
+                Image.asset('assets/images/icon.png', fit: BoxFit.contain),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(200),
+              bottomRight: Radius.circular(200),
+            ),
+          ),
+        ),
         // SliverAppBar(
-        //   title: Text("appbar sliver"),
+
+        //   title: Align(
+        //     alignment: Alignment.center,
+        //     child: Image.asset(
+        //       'assets/images/icon.png',
+        //       height: 78.0,
+        //       width: 78.0,
+        //       alignment: Alignment.center,
+        //     ),
+        //   ),
         //   floating: false,
-        //   expandedHeight: 80.0,
+        //   expandedHeight: 180.0,
         //   // titleSpacing: 50.0,
 
         //   backgroundColor: Colors.purple[100],
@@ -34,7 +59,6 @@ class _ListcardodyState extends State<Listcardody> {
               ),
               elevation: 5,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(

@@ -5,7 +5,10 @@ import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:pusherflu/chart.dart';
 import 'package:pusherflu/claschart.dart';
+import 'package:pusherflu/gatau.dart';
 import 'package:pusherflu/listcardody.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -17,6 +20,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'),
+        Locale('zh'),
+        Locale('fr'),
+        Locale('es'),
+        Locale('de'),
+        Locale('ru'),
+        Locale('ja'),
+        Locale('ar'),
+        Locale('fa'),
+        Locale("es"),
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -37,41 +56,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Channel _pChannel;
-  String _valGender = "Januari";
   List _adata = [];
   List _madata = [];
-  bool stindi = true;
+  bool stindi = false;
   List<ClassChart> data = [
-    ClassChart(sensor: 'DHT 1', datas: 19),
-    ClassChart(sensor: 'DHT 2', datas: 29),
-    ClassChart(sensor: 'DHT 3', datas: 39),
-    ClassChart(sensor: 'DHT 4', datas: 49),
-    ClassChart(sensor: 'DHT 5', datas: 59),
-    ClassChart(sensor: 'DHT 6', datas: 69),
-    ClassChart(sensor: 'AIR', datas: 79),
+    ClassChart(sensor: 'DHT 1', datas: 0),
+    ClassChart(sensor: 'DHT 2', datas: 0),
+    ClassChart(sensor: 'DHT 3', datas: 0),
+    ClassChart(sensor: 'DHT 4', datas: 0),
+    ClassChart(sensor: 'DHT 5', datas: 0),
+    ClassChart(sensor: 'DHT 6', datas: 0),
+    ClassChart(sensor: 'AIR', datas: 0),
   ];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  List _listGender = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember"
-  ];
   var ss;
+  DateTime selectedDate;
   @override
   void initState() {
     super.initState();
     _konekpusher();
     dLoad();
+    selectedDate = DateTime.now();
   }
 
   int tabin = 0;
@@ -121,50 +127,105 @@ class _MyHomePageState extends State<MyHomePage> {
   final tombol = <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text("Kontrol")),
     BottomNavigationBarItem(icon: Icon(Icons.assessment), title: Text("Rekap")),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.access_alarm), title: Text("Bulan")),
   ];
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
     final page = <Widget>[
       Listcardody(_adata, _madata),
       CustomScrollView(
         slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 150,
+            stretch: false,
+            backgroundColor: Colors.purple[50],
+            flexibleSpace: FlexibleSpaceBar(
+              background:
+                  Image.asset('assets/images/icon.png', fit: BoxFit.contain),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(200),
+                bottomRight: Radius.circular(200),
+              ),
+            ),
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
-            Align(
-                alignment: Alignment(0.80, 0.00),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(
-                        color: Colors.white,
-                        style: BorderStyle.solid,
-                        width: 0.60),
-                  ),
-                  child: DropdownButton(
-                    hint: Text("Pilih Bulan"),
-                    dropdownColor: Colors.purple[200],
-                    value: _valGender,
-                    items: _listGender.map((e) {
-                      return DropdownMenuItem(
-                        child: Text(e),
-                        value: e,
-                      );
-                    }).toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        _valGender = val;
-                        _loadFrekap(_valGender);
-                        stindi = true;
-                      });
-                    },
-                  ),
-                )),
             Container(
-              height: 200,
-            ),
+                height: 190,
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                        alignment: Alignment(0.80, -0.10),
+                        child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(
+                                  color: Colors.purple,
+                                  style: BorderStyle.solid,
+                                  width: 0.60),
+                            ),
+                            child: FlatButton(
+                                onPressed: () {
+                                  showMonthPicker(
+                                          context: context,
+                                          firstDate: DateTime(
+                                              DateTime.now().year - 1, 5),
+                                          lastDate: DateTime(
+                                              DateTime.now().year + 1, 9),
+                                          initialDate: selectedDate,
+                                          locale: Locale('en'))
+                                      .then((date) {
+                                    if (date != null) {
+                                      _showMyDialog(date, "Pilih Data Rekap",
+                                          "Lanjutkan Memilih ");
+                                      // setState(() {
+                                      //   selectedDate = date;
+                                      // });
+                                    }
+                                  });
+                                },
+                                child: Icon(Icons.calendar_today)))),
+                    Align(
+                        alignment: Alignment(-0.80, -0.10),
+                        child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(
+                                  color: Colors.purple,
+                                  style: BorderStyle.solid,
+                                  width: 0.60),
+                            ),
+                            child: FlatButton(
+                                onPressed: () {
+                                  showMonthPicker(
+                                          context: context,
+                                          firstDate: DateTime(
+                                              DateTime.now().year - 1, 5),
+                                          lastDate: DateTime(
+                                              DateTime.now().year + 1, 9),
+                                          initialDate: selectedDate,
+                                          locale: Locale('en'))
+                                      .then((date) {
+                                    if (date != null) {
+                                      _showMyDialog(date, "Hapus Data",
+                                          "Anda Yakin Ingin Menghapus ");
+                                      // setState(() {
+                                      //   selectedDate = date;
+                                      // });
+                                    }
+                                  });
+                                },
+                                child: Icon(Icons.delete_forever)))),
+                  ],
+                )),
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -174,18 +235,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ]))
         ],
       ),
+      Odybulan(initialDate: DateTime.now())
     ];
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/images/icon.png',
-          height: 58.0,
-          width: 58.0,
-          alignment: Alignment.center,
-        ),
-        backgroundColor: Colors.purple[100], //Color(0xff9575cd),
-        elevation: 0.0, //shadow app bar
-      ),
       backgroundColor: Colors.purple[100],
       body: stindi
           ? Align(
@@ -291,6 +343,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (respon.statusCode == 200) {
       // final o = json.decode(respon.body);
       // print(json.decode(respon.body)[1]);
+      // print(respon.body);
       final a = json.decode(respon.body);
       setState(() {
         // int dex = 0;
@@ -306,6 +359,46 @@ class _MyHomePageState extends State<MyHomePage> {
         // loading = false;
       });
     }
+  }
+
+  Future<void> _showMyDialog(DateTime date, String title, String pesan) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    pesan + '${date.month.toString()}/${date.year.toString()}'),
+                Text('Silahkan Pilih  Ok/Cancel'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  selectedDate = date;
+                  _loadFrekap(
+                      date.month.toString() + "-" + date.year.toString());
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
