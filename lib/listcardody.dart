@@ -26,7 +26,7 @@ class _ListcardodyState extends State<Listcardody> {
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(200),
+              bottomLeft: Radius.circular(-200),
               bottomRight: Radius.circular(200),
             ),
           ),

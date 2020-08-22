@@ -33,6 +33,7 @@ dependencies:
   http: ^0.12.2
   pull_to_refresh: ^1.6.1
   month_picker_dialog: ^0.3.2
+  drop_cap_text: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,20 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/icon.png
+    - assets/images/headerApp.png
+    - assets/images/ftombol.png
+    - assets/images/suhu.png
+    - assets/images/lembab.png
+    - assets/images/hair.png
+    - assets/images/isiair.png
+    - assets/images/dhtchart.png
+    - assets/images/numberchart.png
+    - assets/images/dht22.png
+    - assets/images/esp.png
+    - assets/images/pompa.png
+    - assets/images/relaydc.png
+    - assets/images/ultrasonic.png
+    - assets/images/solenoid.png
 
   # To add assets to your application, add an assets section, like this:
   

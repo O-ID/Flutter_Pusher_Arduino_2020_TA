@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   var ss;
+  String tampilkan = 'Pilih Bulan Untuk Melihat Data Pengembunan';
   DateTime selectedDate;
   @override
   void initState() {
@@ -128,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text("Kontrol")),
     BottomNavigationBarItem(icon: Icon(Icons.assessment), title: Text("Rekap")),
     BottomNavigationBarItem(
-        icon: Icon(Icons.access_alarm), title: Text("Bulan")),
+        icon: Icon(Icons.add_to_queue), title: Text("Info")),
   ];
   @override
   Widget build(BuildContext context) {
@@ -149,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(200),
+                bottomLeft: Radius.circular(-200),
                 bottomRight: Radius.circular(200),
               ),
             ),
@@ -158,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
               delegate: SliverChildListDelegate([
             Container(
                 height: 190,
+                // color: Colors.black,
                 child: Stack(
                   children: <Widget>[
                     Align(
@@ -183,15 +185,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                           locale: Locale('en'))
                                       .then((date) {
                                     if (date != null) {
-                                      _showMyDialog(date, "Pilih Data Rekap",
-                                          "Lanjutkan Memilih ");
-                                      // setState(() {
-                                      //   selectedDate = date;
-                                      // });
+                                      // _showMyDialog(date, "Pilih Data Rekap",
+                                      //     "Lanjutkan Memilih ", false);
+                                      var s =
+                                          int.parse(date.month.toString()) < 10
+                                              ? "0" + date.month.toString()
+                                              : date.month.toString();
+                                      _loadFrekap(
+                                          date.year.toString() + "-" + s,
+                                          false);
+                                      setState(() {
+                                        selectedDate = date;
+                                      });
                                     }
                                   });
                                 },
-                                child: Icon(Icons.calendar_today)))),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Icon(Icons.calendar_today),
+                                    Text('Lihat Data')
+                                  ],
+                                )))),
                     Align(
                         alignment: Alignment(-0.80, -0.10),
                         child: Container(
@@ -216,16 +231,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                       .then((date) {
                                     if (date != null) {
                                       _showMyDialog(date, "Hapus Data",
-                                          "Anda Yakin Ingin Menghapus ");
+                                          "Anda Yakin Ingin Menghapus ", true);
                                       // setState(() {
                                       //   selectedDate = date;
                                       // });
                                     }
                                   });
                                 },
-                                child: Icon(Icons.delete_forever)))),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Icon(Icons.delete_forever),
+                                    Text('Hapus Data')
+                                  ],
+                                )))),
                   ],
                 )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(tampilkan),
+            ),
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -235,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ]))
         ],
       ),
-      Odybulan(initialDate: DateTime.now())
+      Psolving()
     ];
     return Scaffold(
       backgroundColor: Colors.purple[100],
@@ -336,32 +361,50 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _loadFrekap(String isian) async {
+  Future<void> _loadFrekap(String isian, bool izy) async {
     final respon = await http.post('https://odi.sdnlada2.sch.id/f_rekap.php',
-        body: {'dcode': isian});
-    // await http.get('https://odi.sdnlada2.sch.id/f_rekap.php');
+        body: {'dcode': isian, 'bole': izy ? 't' : ''});
     if (respon.statusCode == 200) {
-      // final o = json.decode(respon.body);
-      // print(json.decode(respon.body)[1]);
-      // print(respon.body);
       final a = json.decode(respon.body);
-      setState(() {
-        // int dex = 0;
-        data.clear();
-        for (Map i in a) {
-          // dex++;
-          data.add(ClassChart(
-              sensor: Album.fromJson(i).sensor, datas: Album.fromJson(i).onn));
-          // print(Album.fromJson(i).onn);
-          // print(dex);
-        }
-        stindi = false;
-        // loading = false;
-      });
+      // print(json.decode(respon.body)[1]['sensor']);
+      if (!izy) {
+        setState(() {
+          tampilkan = "Data Pada Bulan " + isian;
+          data.clear();
+          for (Map i in a) {
+            data.add(ClassChart(
+                sensor: Album.fromJson(i).sensor,
+                datas: Album.fromJson(i).onn));
+          }
+          stindi = false;
+        });
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Respon Sistem !!!'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text('Data $isian ${a[0]["hasil"]} Di Hapus')
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+      }
     }
   }
 
-  Future<void> _showMyDialog(DateTime date, String title, String pesan) async {
+  Future<void> _showMyDialog(
+      DateTime date, String title, String pesan, bool iss) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -388,10 +431,16 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
+                var s = int.parse(date.month.toString()) < 10
+                    ? "0" + date.month.toString()
+                    : date.month.toString();
                 setState(() {
                   selectedDate = date;
-                  _loadFrekap(
-                      date.month.toString() + "-" + date.year.toString());
+                  _loadFrekap(date.year.toString() + "-" + s, iss);
+                  tampilkan = "Data Pada Bulan " +
+                      date.month.toString() +
+                      "-" +
+                      date.year.toString();
                 });
               },
             ),
