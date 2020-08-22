@@ -1,4 +1,4 @@
-# pusherflu
+# Monitoring Dan Kontrol Kelembaban Pada Kumbung Jamur Tiram Menggunakan Multisensor
  APLIKASI TA/SKRIPSI KU <br>TOMBOL KONTROL<br> 
 <img src="https://github.com/O-ID/pusherflu/blob/master/assets/images/1.jpg" width="200">
 <img src="https://github.com/O-ID/pusherflu/blob/master/assets/images/2.jpg" width="200">
