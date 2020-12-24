@@ -1,4 +1,5 @@
 # Monitoring Dan Kontrol Kelembaban Pada Kumbung Jamur Tiram Menggunakan Multisensor
+Aplikasi Ini Merupakan Monitoring dan Kontrol Suhu Kelembaban Di Empat titik menggunakan Sensor DHT22 sebanyak 4 Buah dan 1 Water Level Sensor untuk mengukur tinggi air. Kenapa Menggunakan 4 Sensor yang sama? Karena di setiap area itu berbeda Suhu Dan Kelembaban, Perbedaan tersebut perlu dengan adanya perlakuan khusus pada area tertentu. Maka Dibuatlah Aplikasi ini.
  ## Aplikasi Ini Meliputi:<br>
   ***->[Flutter](https://flutter.dev/)<br>->[Pusher](https://pusher.com/)<br>->[Arduino](https://arduino.cc/)<br>->[PHP](https://php.net/)***
  <br>
