@@ -9,10 +9,11 @@
  **PASTIKAN!!!** Anda telah minginstall Flutter, Jika Belum install Flutter Bisa Mengikuti [Cara Install Flutter](https://flutter.dev/docs/get-started/install) Di situs resminya. Jika sudah lanjut ke<br>
  1. Download [File Project](https://codeload.github.com/O-ID/Flutter_Pusher_Arduino_2020_TA/zip/master) Ini Dan Extract
  2. Buka Dengan VScode/AndroidStudio
- 3. Ganti ApiKey, Channel dan Cluster Pusher. Jika Belum Punya Buat Secara **Gratis** [Disini](https://dashboard.pusher.com/channels)
+ 3. Ganti ApiKey, Channel dan Cluster Pusher. Jika Belum Punya Buat Secara **Gratis** <a href="https://dashboard.pusher.com/channels" target="_blank" rel="noopener noreferrer">Disini</a>
  4. Run Debug Atau Bisa Menggunakan Key **F5**
  5. Done Enjoy :)
-#### Untuk File Project Arduino Bisa Di Download [Disini](https://raw.githubusercontent.com/O-ID/myta2/master/myta2.ino)
+#### Untuk File Project Arduino Bisa Download [Disini](https://raw.githubusercontent.com/O-ID/myta2/master/myta2.ino)
+<a href="fb.com" target="_blank" rel="noopener noreferrer">Facebook</a>
 ### TOMBOL KONTROL
 <img src="https://github.com/O-ID/pusherflu/blob/master/assets/images/1.jpg" width="200">
 <img src="https://github.com/O-ID/pusherflu/blob/master/assets/images/2.jpg" width="200">
