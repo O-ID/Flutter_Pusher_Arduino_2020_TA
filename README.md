@@ -11,6 +11,7 @@
  2. Buka Dengan VScode/AndroidStudio
  3. Ganti ApiKey, Channel dan Cluster Pusher. Jika Belum Punya Buat Secara **Gratis** [Disini](https://dashboard.pusher.com/channels)
  4. Run Debug Atau Bisa Menggunakan Key **F5**
+ 5. Done Enjoy :)
 #### Untuk File Project Arduino Bisa Di Download [Disini](https://raw.githubusercontent.com/O-ID/myta2/master/myta2.ino)
 ### TOMBOL KONTROL
 <img src="https://github.com/O-ID/pusherflu/blob/master/assets/images/1.jpg" width="200">
